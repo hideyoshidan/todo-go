@@ -1,0 +1,13 @@
+2023-04-09T12:07:16.130950Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.32) starting as process 257
+2023-04-09T12:07:16.158336Z 0 [Warning] [MY-010159] [Server] Setting lower_case_table_names=2 because file system for /var/lib/mysql/ is case insensitive
+2023-04-09T12:07:16.279780Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-04-09T12:07:16.500674Z 1 [ERROR] [MY-012585] [InnoDB] Linux Native AIO interface is not supported on this platform. Please check your OS documentation and install appropriate binary of InnoDB.
+2023-04-09T12:07:16.502237Z 1 [Warning] [MY-012654] [InnoDB] Linux Native AIO disabled.
+2023-04-09T12:07:18.760602Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-04-09T12:07:20.645948Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2023-04-09T12:07:20.648079Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2023-04-09T12:07:20.663002Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2023-04-09T12:07:20.861005Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2023-04-09T12:07:20.861634Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.32'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+2023-04-09T12:07:37.747408Z 13 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.32).
+2023-04-09T12:07:39.442395Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.32)  MySQL Community Server - GPL.

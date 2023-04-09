@@ -1,0 +1,92 @@
+version: '3'
+services:
+  ########################################################################
+  # Mysql
+  ########################################################################
+  todo-db: 
+    container_name: todo-db
+    build: 
+      context: ../
+      dockerfile: .docker/mysql/Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: todo
+      MYSQL_USER: todo
+      MYSQL_PASSWORD: todo
+      TZ: 'Asia/Tokyo'
+    ports:
+      - 3307:3307
+    restart: always
+    volumes:
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/logs:/var/lib/mysql
+    tty: true
+    platform: linux/amd64
+  
+  ########################################################################
+  # gRPC container
+  ########################################################################
+  # Appmixer
+  todo-appmixer:
+    container_name: todo-appmixer
+    build:
+      context: ../
+      dockerfile: .docker/app/Dockerfile
+      target: appmixer-server
+    volumes: 
+      - ../src:/go/src/app
+    tty: true
+    ports:
+      - 8000:8000
+    depends_on: 
+      - todo-db
+    platform: linux/amd64
+
+  # Greeting
+  todo-greeting:
+    container_name: todo-greeting
+    build:
+      context: ../
+      dockerfile: .docker/app/Dockerfile
+      target: greeting-server
+    volumes: 
+      - ../src:/go/src/app
+    tty: true
+    ports:
+      - 4000:4000
+    depends_on: 
+      - todo-db
+    platform: linux/amd64
+
+  # Todo
+  todo-todo:
+    container_name: todo-todo
+    build:
+      context: ../
+      dockerfile: .docker/app/Dockerfile
+      target: todo-server
+    volumes: 
+      - ../src:/go/src/app
+    tty: true
+    ports:
+      - 4001:4001
+    depends_on: 
+      - todo-db
+    platform: linux/amd64
+
+  # User
+  todo-user:
+    container_name: todo-user
+    build:
+      context: ../
+      dockerfile: .docker/app/Dockerfile
+      target: user-server
+    volumes: 
+      - ../src:/go/src/app
+    tty: true
+    ports:
+      - 4002:4002
+    depends_on: 
+      - todo-db
+    platform: linux/amd64

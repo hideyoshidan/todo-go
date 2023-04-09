@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package appmixer;
+
+option go_package = "src/proto/appmixer/";
+
+// ここがエラーになっているかもしれないが、buildは正常に通るのでok
+import "google/api/annotations.proto";
+
+
+service Appmixer {
+  // Sends a greeting
+  rpc SayHello (AppRequest) returns (AppResponse) {
+    option (google.api.http) = {
+      post: "/todo/say-hello"
+      body: "*"
+    };
+  }
+  // Sends another greeting
+  rpc SayHelloAgain (AppRequest) returns (AppResponse) {
+    option (google.api.http) = {
+      post: "/todo/say-hello-again"
+      body: "*"
+    };
+  }
+
+
+}
+
+message AppRequest {
+  string name = 1;
+}
+
+message AppResponse {
+  string message = 1;
+}

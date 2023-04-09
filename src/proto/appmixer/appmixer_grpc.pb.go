@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v3.21.12
-// source: services/appmixer.proto
+// source: gateway/appmixer.proto
 
 package appmixer
 
@@ -146,5 +146,5 @@ var Appmixer_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "services/appmixer.proto",
+	Metadata: "gateway/appmixer.proto",
 }

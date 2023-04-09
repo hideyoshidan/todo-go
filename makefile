@@ -47,7 +47,7 @@ call-grpc:
 
 # protoのコマンド
 # https://qiita.com/maaaashin324/items/b8d3c5c016203dce2d6a
-BUILD_FROM=src/protofiles/services/
+BUILD_FROM=proto/services
 proto-gen:
 	protoc --go_out=. \
         --go-grpc_out=. \
@@ -58,7 +58,8 @@ proto-gw:
 		--go_out=./ \
 		--go-grpc_out=. \
 		--grpc-gateway_out=. \
-		proto/services/appmixer.proto
+		--plugin=protoc-gen-grpc-gateway=${GOBIN}/protoc-gen-grpc-gateway \
+		proto/gateway/appmixer.proto
 
 sample-curl:
 	curl -X POST -k http://localhost:8000/todo/say-hello -d '{"name": "Hinako!!!!"}'

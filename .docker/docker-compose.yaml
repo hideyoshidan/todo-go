@@ -26,6 +26,9 @@ services:
   
   ########################################################################
   # gRPC container
+  # Connection btw containers are available with docker network (bridge)
+  # If change host:container port mapping, 
+  # must change `src/services/*/main.go > RPC_PORT` to changed to the container port
   ########################################################################
   # Appmixer
   todo-appmixer:

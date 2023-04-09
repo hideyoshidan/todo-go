@@ -2,9 +2,11 @@
 FROM golang:1.20.0-alpine3.17 AS base
 RUN apk update && apk add git
 
-# 現状分ける必要性はないが、将来的にeach containerにoriginalな何かを加えるかもしれないので
-# マルチステージビルドを定義しておく。
-# 開発が完成したら、go buildしたマルチビルドも作りたい
+# Current status there is no need to separate images with docker multi stage building.
+# But there is possibility that adds some original thing to each image in the future.
+# Hence defines these images as multi building.
+# 
+# Want to make multi building with built go file.
 ###################################
 # gPRC greeting
 ###################################

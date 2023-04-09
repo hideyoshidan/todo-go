@@ -4,6 +4,7 @@ package appmixer;
 
 option go_package = "src/proto/appmixer/";
 
+// ここがエラーになっているかもしれないが、buildは正常に通るのでok
 import "google/api/annotations.proto";
 
 

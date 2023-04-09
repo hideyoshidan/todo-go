@@ -1,6 +1,6 @@
 #!/bin/sh
 
-make run-greeting
-make run-todo 
-make run-user
-make run-appmixer
+make run-greeting-back
+make run-todo-back
+make run-user-back
+make run-appmixer-back

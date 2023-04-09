@@ -1,7 +1,3 @@
-SERVER_GREETING=todo-greeting
-SERVER_TODO=todo-todo
-SERVER_USER=todo-user
-SERVER_APPMIXER=todo-appmixer
 build:
 	cd .docker && docker compose build --no-cache
 up:
@@ -17,7 +13,12 @@ stop:
 down:
 	cd .docker && docker compose down
 
+
 # exec into container
+SERVER_GREETING=todo-greeting
+SERVER_TODO=todo-todo
+SERVER_USER=todo-user
+SERVER_APPMIXER=todo-appmixer
 into-greeting:
 	cd .docker && docker compose exec ${SERVER_GREETING} /bin/sh
 into-todo:
@@ -27,32 +28,36 @@ into-user:
 into-appmixer:
 	cd .docker && docker compose exec ${SERVER_APPMIXER} /bin/sh
 
-# run grpc
+# run grpc on foregrond
 run-greeting:
-	cd .docker && docker compose exec -d ${SERVER_GREETING} /bin/sh -c "go run /go/src/app/services/greeting/main.go"
+	cd .docker && docker compose exec ${SERVER_GREETING} /bin/sh -c "go run /go/src/app/services/greeting/main.go"
 run-todo:
-	cd .docker && docker compose exec -d ${SERVER_TODO} /bin/sh -c "go run /go/src/app/services/todo/main.go"
+	cd .docker && docker compose exec ${SERVER_TODO} /bin/sh -c "go run /go/src/app/services/todo/main.go"
 run-user:
-	cd .docker && docker compose exec -d ${SERVER_USER} /bin/sh -c "go run /go/src/app/services/user/main.go"
+	cd .docker && docker compose exec ${SERVER_USER} /bin/sh -c "go run /go/src/app/services/user/main.go"
 run-appmixer:
+	cd .docker && docker compose exec ${SERVER_APPMIXER} /bin/sh -c "go run /go/src/app/services/appmixer/main.go"
+
+# run grpc on background
+run-greeting-back:
+	cd .docker && docker compose exec -d ${SERVER_GREETING} /bin/sh -c "go run /go/src/app/services/greeting/main.go"
+run-todo-back:
+	cd .docker && docker compose exec -d ${SERVER_TODO} /bin/sh -c "go run /go/src/app/services/todo/main.go"
+run-user-back:
+	cd .docker && docker compose exec -d ${SERVER_USER} /bin/sh -c "go run /go/src/app/services/user/main.go"
+run-appmixer-back:
 	cd .docker && docker compose exec -d ${SERVER_APPMIXER} /bin/sh -c "go run /go/src/app/services/appmixer/main.go"
-run-all:
+run-all-back:
 	./start-grpc.sh
 
-# Samples
-ls-grpc:
-	grpc_cli ls localhost:4001
-call-grpc:
-	grpc_cli call localhost:4001 todo.Greeter.SayHello 'name:"Hinako"'
-
-# protoのコマンド
-# https://qiita.com/maaaashin324/items/b8d3c5c016203dce2d6a
+# proto builder
 BUILD_FROM=proto/services
 proto-gen:
 	protoc --go_out=. \
         --go-grpc_out=. \
         ${BUILD_FROM}/*
 
+# grpc-gateway builder
 proto-gw:
 	protoc -I ./proto \
 		--go_out=./ \
@@ -61,5 +66,23 @@ proto-gw:
 		--plugin=protoc-gen-grpc-gateway=${GOBIN}/protoc-gen-grpc-gateway \
 		proto/gateway/appmixer.proto
 
-sample-curl:
+# Check each grpc server working or no
+ls-grpc-greeting:
+	grpc_cli ls localhost:4000
+ls-grpc-todo:
+	grpc_cli ls localhost:4001
+ls-grpc-user:
+	grpc_cli ls localhost:4002
+
+# Check each grpc server working on first time
+# With updating day by day, this funcions are disable
+call-grpc-greeting:
+	grpc_cli call localhost:4000 greeting.Greeter.SayHello 'name:"Twice!!!!!"'
+call-grpc-todo:
+	grpc_cli call localhost:4001 todo.Greeter.SayHello 'name:"Twice!!!!!"'
+call-grpc-user:
+	grpc_cli call localhost:4002 user.Greeter.SayHello 'name:"Twice!!!!!"'
+
+# Check grpc-gateway running
+sample-gw:
 	curl -X POST -k http://localhost:8000/todo/say-hello -d '{"name": "Hinako!!!!"}'

@@ -2,6 +2,9 @@
 
 This is todo site sample for backend.
 
+I wanted to create this app with gRPC for my studying.   
+So understanding that this app uses too much technologies with waste.
+
 
 ## ■ Using with
 - docker

@@ -28,3 +28,12 @@ WORKDIR /go/src/app
 
 COPY ../../src /go/src/app
 RUN go mod tidy
+
+###################################
+# gPRC user
+###################################
+FROM base AS user-server
+WORKDIR /go/src/app
+
+COPY ../../src /go/src/app
+RUN go mod tidy

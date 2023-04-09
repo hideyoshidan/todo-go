@@ -18,9 +18,9 @@ services:
       - 3307:3307
     restart: always
     volumes:
-      - .docker/mysql/conf.d:/etc/mysql/conf.d
-      - .docker/mysql/data:/var/lib/mysql
-      - .docker/mysql/logs:/var/lib/mysql
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/logs:/var/lib/mysql
     tty: true
     platform: linux/amd64
   
@@ -42,6 +42,7 @@ services:
     depends_on: 
       - todo-db
     platform: linux/amd64
+
   # Greeting
   todo-greeting:
     container_name: todo-greeting
@@ -57,6 +58,7 @@ services:
     depends_on: 
       - todo-db
     platform: linux/amd64
+
   # Todo
   todo-todo:
     container_name: todo-todo
@@ -72,17 +74,19 @@ services:
     depends_on: 
       - todo-db
     platform: linux/amd64
-  # todo-user:
-  #   container_name: todo-user
-  #   build:
-  #     context: ../
-  #     dockerfile: .docker/app/Dockerfile
-  #   volumes: 
-  #     - ../src:/go/src/app
-  #   tty: true
-  #   ports:
-  #     - 8000:8000
-  #   depends_on: 
-  #     - todo-db
-  #   platform: linux/amd64
-  
+
+  # User
+  todo-user:
+    container_name: todo-user
+    build:
+      context: ../
+      dockerfile: .docker/app/Dockerfile
+      target: user-server
+    volumes: 
+      - ../src:/go/src/app
+    tty: true
+    ports:
+      - 4002:4002
+    depends_on: 
+      - todo-db
+    platform: linux/amd64

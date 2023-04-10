@@ -1,11 +1,11 @@
 syntax = "proto3";
-
 package appmixer;
 
-option go_package = "src/proto/appmixer/";
+option go_package = "src/proto/appmixer";
 
 // Although this might be error, build is successful working
 import "google/api/annotations.proto";
+import "validate/validate.proto";
 
 
 service Appmixer {
@@ -24,7 +24,21 @@ service Appmixer {
     };
   }
 
+  // Sing Up to TODO Application
+  rpc SignUp(SignUpRequest) returns (SignUpResponse) {
+    option (google.api.http) = {
+      post: "/sign-up"
+      body: "*"
+    };
+  }
 
+  // Sing In to TODO Application
+  rpc SignIn(SignInRequest) returns (SignInResponse) {
+    option (google.api.http) = {
+      post: "/sign-in"
+      body: "*"
+    };
+  }
 }
 
 message AppRequest {
@@ -33,4 +47,26 @@ message AppRequest {
 
 message AppResponse {
   string message = 1;
+}
+
+message SignUpRequest {
+  string email = 1;
+  string password = 2;
+  string password_confirmation = 3;
+}
+
+message SignUpResponse {
+  // JWT token
+  string token = 1;
+}
+
+message SignInRequest {
+  string email = 1;
+  string password = 2;
+  string password_confirmation = 3;
+}
+
+message SignInResponse {
+  // JWT token
+  string token = 1;
 }

@@ -46,7 +46,7 @@ export GOBIN=$GOPATH/bin
 % source ~/.zshrc
 ```
 
-### ② Install some requirements referred with [here](https://grpc.io/docs/languages/go/quickstart/)
+### ③ Install some requirements referred with [here](https://grpc.io/docs/languages/go/quickstart/)
 _**Note: Should install with one by one**_
 ```
 % go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
@@ -70,12 +70,13 @@ export PATH="$PATH:$(go env GOPATH)/bin"%
 % source ~/.zshrc
 ```
 
-### ③ Build Docker containers
+## ■ Set up
+### ① Build Docker containers
 ```
 % make up
 ```
 
-### ④ If you want to run all services on each containers, run below
+### ② If you want to run all services on each containers, run below
 ```
 % make run-all
 ```

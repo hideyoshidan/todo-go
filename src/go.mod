@@ -3,6 +3,7 @@ module todo.com
 go 1.20
 
 require (
+	github.com/envoyproxy/protoc-gen-validate v0.9.1
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
 	github.com/k0kubun/pp v3.0.1+incompatible
 	google.golang.org/genproto v0.0.0-20230403163135-c38d8f061ccd

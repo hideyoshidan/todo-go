@@ -63,6 +63,7 @@ proto-gw:
 		--go_out=./ \
 		--go-grpc_out=. \
 		--grpc-gateway_out=. \
+		--validate_out="lang=go:." \
 		--plugin=protoc-gen-grpc-gateway=${GOBIN}/protoc-gen-grpc-gateway \
 		proto/gateway/appmixer.proto
 

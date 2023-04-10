@@ -21,6 +21,8 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Appmixer_SayHello_FullMethodName      = "/appmixer.Appmixer/SayHello"
 	Appmixer_SayHelloAgain_FullMethodName = "/appmixer.Appmixer/SayHelloAgain"
+	Appmixer_SignUp_FullMethodName        = "/appmixer.Appmixer/SignUp"
+	Appmixer_SignIn_FullMethodName        = "/appmixer.Appmixer/SignIn"
 )
 
 // AppmixerClient is the client API for Appmixer service.
@@ -31,6 +33,10 @@ type AppmixerClient interface {
 	SayHello(ctx context.Context, in *AppRequest, opts ...grpc.CallOption) (*AppResponse, error)
 	// Sends another greeting
 	SayHelloAgain(ctx context.Context, in *AppRequest, opts ...grpc.CallOption) (*AppResponse, error)
+	// Sing Up to TODO Application
+	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignUpResponse, error)
+	// Sing In to TODO Application
+	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
 }
 
 type appmixerClient struct {
@@ -59,6 +65,24 @@ func (c *appmixerClient) SayHelloAgain(ctx context.Context, in *AppRequest, opts
 	return out, nil
 }
 
+func (c *appmixerClient) SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignUpResponse, error) {
+	out := new(SignUpResponse)
+	err := c.cc.Invoke(ctx, Appmixer_SignUp_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appmixerClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error) {
+	out := new(SignInResponse)
+	err := c.cc.Invoke(ctx, Appmixer_SignIn_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppmixerServer is the server API for Appmixer service.
 // All implementations must embed UnimplementedAppmixerServer
 // for forward compatibility
@@ -67,6 +91,10 @@ type AppmixerServer interface {
 	SayHello(context.Context, *AppRequest) (*AppResponse, error)
 	// Sends another greeting
 	SayHelloAgain(context.Context, *AppRequest) (*AppResponse, error)
+	// Sing Up to TODO Application
+	SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error)
+	// Sing In to TODO Application
+	SignIn(context.Context, *SignInRequest) (*SignInResponse, error)
 	mustEmbedUnimplementedAppmixerServer()
 }
 
@@ -79,6 +107,12 @@ func (UnimplementedAppmixerServer) SayHello(context.Context, *AppRequest) (*AppR
 }
 func (UnimplementedAppmixerServer) SayHelloAgain(context.Context, *AppRequest) (*AppResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SayHelloAgain not implemented")
+}
+func (UnimplementedAppmixerServer) SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
+}
+func (UnimplementedAppmixerServer) SignIn(context.Context, *SignInRequest) (*SignInResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
 }
 func (UnimplementedAppmixerServer) mustEmbedUnimplementedAppmixerServer() {}
 
@@ -129,6 +163,42 @@ func _Appmixer_SayHelloAgain_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Appmixer_SignUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignUpRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppmixerServer).SignUp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Appmixer_SignUp_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppmixerServer).SignUp(ctx, req.(*SignUpRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Appmixer_SignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignInRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppmixerServer).SignIn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Appmixer_SignIn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppmixerServer).SignIn(ctx, req.(*SignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Appmixer_ServiceDesc is the grpc.ServiceDesc for Appmixer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -143,6 +213,14 @@ var Appmixer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SayHelloAgain",
 			Handler:    _Appmixer_SayHelloAgain_Handler,
+		},
+		{
+			MethodName: "SignUp",
+			Handler:    _Appmixer_SignUp_Handler,
+		},
+		{
+			MethodName: "SignIn",
+			Handler:    _Appmixer_SignIn_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
